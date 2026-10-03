@@ -1,584 +1,445 @@
-/* ==========================================
-ELEMENTS
-========================================== */
+/* =====================================================
+   TEACHER'S DAY WEBSITE
+===================================================== */
 
-const music =
-document.getElementById("music");
 
-const mainTitle =
-document.getElementById("mainTitle");
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const subTitle =
-document.getElementById("subTitle");
+const music = document.getElementById("music");
 
-const startButton =
-document.getElementById("startButton");
+const scene1 = document.getElementById("scene1");
+const scene2 = document.getElementById("scene2");
+const scene3 = document.getElementById("scene3");
+const scene4 = document.getElementById("scene4");
 
-const notesContinue =
-document.getElementById("notesContinue");
+const mainTitle = document.getElementById("mainTitle");
+const subTitle = document.getElementById("subTitle");
 
-const stickyArea =
-document.getElementById("stickyArea");
+const startButton = document.getElementById("startButton");
 
-const envelope =
-document.getElementById("envelope");
+const stickyArea = document.getElementById("stickyArea");
+const notesContinue = document.getElementById("notesContinue");
 
-const envelopeHint =
-document.getElementById("envelopeHint");
+const envelope = document.getElementById("envelope");
+const envelopeHint = document.getElementById("envelopeHint");
+const finalButton = document.getElementById("finalButton");
 
-const scenes =
-document.querySelectorAll(".scene");
+const goldLine = document.querySelector(".gold-line");
 
-/* ==========================================
-SCENE SWITCHER
-========================================== */
+
+/* =====================================================
+   SCENE SWITCHER
+===================================================== */
 
 function showScene(number) {
 
-scenes.forEach(scene => {
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active");
+    });
 
-    scene.classList.remove("active");
+    const selected = document.getElementById(`scene${number}`);
 
-});
-
-document
-    .querySelector(".scene-" + number)
-    .classList.add("active");
-
+    if (selected) {
+        selected.classList.add("active");
+    }
 }
 
-/* ==========================================
-PARTICLES
-========================================== */
+
+/* =====================================================
+   MUSIC
+===================================================== */
+
+let musicStarted = false;
+
+function startMusic() {
+
+    if (musicStarted) return;
+
+    musicStarted = true;
+
+    music.volume = 0.45;
+
+    music.play().catch(() => {
+        /*
+          Some mobile browsers require another interaction.
+          The website will continue working even if music
+          is blocked.
+        */
+    });
+}
+
+
+/* Start music whenever user first touches the page */
+
+document.addEventListener(
+    "pointerdown",
+    startMusic,
+    { once: true }
+);
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
 
 function createParticles() {
 
-const container =
-    document.getElementById("particles");
+    const container = document.getElementById("particles");
 
-for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 45; i++) {
 
-    const particle =
-        document.createElement("div");
+        const particle = document.createElement("div");
 
-    particle.className =
-        "particle";
+        particle.className = "particle";
 
-    particle.style.left =
-        Math.random() * 100 + "%";
+        particle.style.left =
+            Math.random() * 100 + "%";
 
-    particle.style.animationDuration =
-        8 + Math.random() * 12 + "s";
+        particle.style.animationDuration =
+            (5 + Math.random() * 9) + "s";
 
-    particle.style.animationDelay =
-        Math.random() * 10 + "s";
+        particle.style.animationDelay =
+            (-Math.random() * 10) + "s";
 
-    particle.style.opacity =
-        .2 + Math.random() * .8;
+        particle.style.opacity =
+            (0.2 + Math.random() * 0.7);
 
-    container.appendChild(particle);
-}
-
+        container.appendChild(particle);
+    }
 }
 
 createParticles();
 
-/* ==========================================
-TYPEWRITER
-========================================== */
 
-function typeWriter(
-element,
-text,
-speed
-) {
+/* =====================================================
+   TYPEWRITER
+===================================================== */
 
-return new Promise(resolve => {
+function typeText(element, text, speed = 55) {
 
-    let index = 0;
+    return new Promise(resolve => {
 
-    function write() {
+        element.textContent = "";
 
-        if (index < text.length) {
+        let index = 0;
 
-            element.textContent +=
-                text[index];
+        const timer = setInterval(() => {
+
+            element.textContent += text[index];
 
             index++;
 
-            setTimeout(
-                write,
-                speed
-            );
+            if (index >= text.length) {
 
-        } else {
+                clearInterval(timer);
 
-            resolve();
+                resolve();
+            }
 
-        }
+        }, speed);
 
-    }
-
-    write();
-
-});
-
+    });
 }
 
-/* ==========================================
-START INTRO
-========================================== */
 
-async function intro() {
+/* =====================================================
+   INTRO
+===================================================== */
 
-await new Promise(resolve =>
-    setTimeout(resolve, 900)
-);
+async function runIntro() {
 
+    await new Promise(resolve =>
+        setTimeout(resolve, 700)
+    );
 
-await typeWriter(
-    mainTitle,
-    "HAPPY TEACHER'S DAY",
-    95
-);
+    await typeText(
+        mainTitle,
+        "HAPPY TEACHER'S DAY",
+        80
+    );
 
+    goldLine.classList.add("show");
 
-await new Promise(resolve =>
-    setTimeout(resolve, 500)
-);
+    await new Promise(resolve =>
+        setTimeout(resolve, 400)
+    );
 
+    await typeText(
+        subTitle,
+        "THANK YOU FOR BEING THE BEST TEACHER",
+        45
+    );
 
-await typeWriter(
-    subTitle,
-    "THANK YOU FOR BEING THE BEST TEACHER",
-    55
-);
-
-
-startButton.classList.remove(
-    "hidden"
-);
-
+    startButton.classList.add("show");
 }
 
-intro();
+runIntro();
 
-/* ==========================================
-MUSIC
 
-Mobile browsers require interaction.
-========================================== */
+/* =====================================================
+   START BUTTON
+===================================================== */
 
-function startMusic() {
+startButton.addEventListener("click", () => {
 
-music.volume = .35;
-
-music.play()
-    .catch(() => {});
-
-}
-
-document.body.addEventListener(
-"click",
-startMusic,
-{ once: true }
-);
-
-/* ==========================================
-SCENE 1 → SCENE 2
-========================================== */
-
-startButton.addEventListener(
-"click",
-() => {
+    startMusic();
 
     showScene(2);
 
     startStickyAnimation();
 
-}
+});
 
-);
 
-/* ==========================================
-STICKY NOTE CONTENT
-========================================== */
+/* =====================================================
+   STICKY NOTES
+===================================================== */
 
 const messages = [
 
-"You are the best teacher!",
-
-"Thank you for teaching us!",
-
-"Thank you for believing in us!",
-
-"You inspire us every day!",
-
-"We appreciate you!",
-
-"Thank you for your patience!",
-
-"You make learning meaningful!",
-
-"Thank you for every lesson!",
-
-"You helped us grow!",
-
-"You make a difference!",
-
-"Thank you for guiding us!",
-
-"You make every class brighter!",
-
-"Your lessons stay with us!",
-
-"Thank you for encouraging us!",
-
-"We are grateful for you!",
-
-"You are truly one of a kind!",
-
-"Thank you for never giving up on us!",
-
-"Thank you for making school memorable!",
-
-"You inspire us to do better!",
-
-"Thank you for always being there!",
-
-"We will remember your lessons!",
-
-"Thank you for making learning fun!",
-
-"You believed in us!",
-
-"Your effort never goes unnoticed!",
-
-"We appreciate everything you do!",
-
-"Thank you for being part of our journey!",
-
-"You make a difference in our lives!",
-
-"Thank you for helping us become better!",
-
-"Your kindness means so much!",
-
-"Happy Teacher's Day!"
-
+    "You are the best teacher!",
+    "Thank you for teaching us!",
+    "Thank you for believing in us!",
+    "You inspire us every day!",
+    "We appreciate you!",
+    "Thank you for your patience!",
+    "You make learning fun!",
+    "Thank you for always helping us!",
+    "You make a difference!",
+    "We are grateful for you!",
+    "Thank you for guiding us!",
+    "You motivate us to do better!",
+    "Your lessons stay with us!",
+    "Thank you for understanding us!",
+    "You inspire us to dream big!",
+    "Thank you for never giving up on us!",
+    "You make our classroom special!",
+    "We are lucky to have you!",
+    "Thank you for your kindness!",
+    "You bring out the best in us!",
+    "Thank you for every lesson!",
+    "You are appreciated more than you know!",
+    "Thank you for encouraging us!",
+    "You make a lasting impact!",
+    "Thank you for everything you do!",
+    "You help us believe in ourselves!",
+    "Your hard work inspires us!",
+    "Thank you for making a difference!",
+    "You will always be remembered!",
+    "Happy Teacher's Day!"
 ];
 
-/* ==========================================
-GENERATE POSITIONS
-========================================== */
 
-function generatePositions() {
+/* Shuffle */
 
-const positions = [];
+function shuffle(array) {
 
-const columns = 5;
-
-const rows = 5;
-
-const cellWidth =
-    100 / columns;
-
-const cellHeight =
-    100 / rows;
-
-
-for (
-    let row = 0;
-    row < rows;
-    row++
-) {
+    const copy = [...array];
 
     for (
-        let column = 0;
-        column < columns;
-        column++
+        let i = copy.length - 1;
+        i > 0;
+        i--
     ) {
 
-        positions.push({
+        const j =
+            Math.floor(Math.random() * (i + 1));
 
-            x:
-                column * cellWidth +
-                cellWidth / 2,
-
-            y:
-                row * cellHeight +
-                cellHeight / 2
-
-        });
-
+        [copy[i], copy[j]] =
+            [copy[j], copy[i]];
     }
 
+    return copy;
 }
 
 
-// Shuffle
+/* Create grid positions */
 
-positions.sort(
-    () => Math.random() - .5
-);
+function generatePositions(count) {
 
-return positions;
+    const positions = [];
 
+    /*
+      6 columns × 5 rows gives enough coverage
+      for both desktop and mobile.
+    */
+
+    const columns = 6;
+    const rows = 5;
+
+    for (let row = 0; row < rows; row++) {
+
+        for (let col = 0; col < columns; col++) {
+
+            const x =
+                ((col + 0.5) / columns) * 100;
+
+            const y =
+                ((row + 0.5) / rows) * 100;
+
+            positions.push({
+                x,
+                y
+            });
+        }
+    }
+
+    return shuffle(positions).slice(0, count);
 }
 
-/* ==========================================
-STICKY NOTE ANIMATION
-========================================== */
+
+/* Create one note */
+
+function createSticky(text, position) {
+
+    const note = document.createElement("div");
+
+    note.className = "sticky-note";
+
+    note.textContent = text;
+
+    note.style.left = position.x + "%";
+    note.style.top = position.y + "%";
+
+    /*
+      Random entrance direction
+    */
+
+    const directions = [
+
+        [-120, -120],
+        [120, -120],
+        [-120, 120],
+        [120, 120],
+        [0, -150],
+        [0, 150],
+        [-180, 0],
+        [180, 0]
+
+    ];
+
+    const direction =
+        directions[
+            Math.floor(
+                Math.random() * directions.length
+            )
+        ];
+
+    note.style.setProperty(
+        "--startX",
+        direction[0] + "vw"
+    );
+
+    note.style.setProperty(
+        "--startY",
+        direction[1] + "vh"
+    );
+
+    note.style.setProperty(
+        "--rotation",
+        (Math.random() * 12 - 6) + "deg"
+    );
+
+    note.style.setProperty(
+        "--startRotation",
+        (Math.random() * 80 - 40) + "deg"
+    );
+
+    stickyArea.appendChild(note);
+}
+
+
+/* Start notes */
 
 function startStickyAnimation() {
 
-stickyArea.innerHTML = "";
+    stickyArea.innerHTML = "";
 
-notesContinue.classList.add(
-    "hidden"
-);
+    notesContinue.classList.remove("show");
 
+    const shuffledMessages = shuffle(messages);
 
-const positions =
-    generatePositions();
+    const positions =
+        generatePositions(shuffledMessages.length);
 
+    let index = 0;
 
-messages.forEach(
-    (message, index) => {
+    const interval = setInterval(() => {
 
-        setTimeout(
-            () => {
+        if (index >= shuffledMessages.length) {
 
-                createSticky(
-                    message,
-                    positions[index % positions.length]
-                );
+            clearInterval(interval);
 
-            },
+            setTimeout(() => {
 
-            index * 280
+                notesContinue.classList.remove("hidden");
+                notesContinue.classList.add("show");
+
+            }, 1300);
+
+            return;
+        }
+
+        createSticky(
+            shuffledMessages[index],
+            positions[index]
         );
 
-    }
-);
+        index++;
 
-
-// Show button after animation
-
-setTimeout(
-    () => {
-
-        notesContinue.classList.remove(
-            "hidden"
-        );
-
-    },
-
-    messages.length * 280 + 1200
-);
-
+    }, 230);
 }
 
-/* ==========================================
-CREATE STICKY
-========================================== */
 
-function createSticky(
-message,
-position
-) {
+/* =====================================================
+   STICKY NOTES CONTINUE
+===================================================== */
 
-const note =
-    document.createElement("div");
-
-note.className =
-    "sticky";
-
-
-note.textContent =
-    message;
-
-
-/*
-   Small random movement around
-   the target position.
-*/
-
-const x =
-    position.x +
-    (Math.random() * 10 - 5);
-
-const y =
-    position.y +
-    (Math.random() * 10 - 5);
-
-
-const rotation =
-    Math.random() * 18 - 9;
-
-
-/*
-   Start from different directions.
-*/
-
-const directions = [
-
-    [-window.innerWidth, -window.innerHeight],
-
-    [window.innerWidth, -window.innerHeight],
-
-    [-window.innerWidth, window.innerHeight],
-
-    [window.innerWidth, window.innerHeight],
-
-    [0, -window.innerHeight],
-
-    [0, window.innerHeight],
-
-    [-window.innerWidth, 0],
-
-    [window.innerWidth, 0]
-
-];
-
-
-const direction =
-    directions[
-        Math.floor(
-            Math.random() *
-            directions.length
-        )
-    ];
-
-
-note.style.left =
-    x + "%";
-
-note.style.top =
-    y + "%";
-
-
-note.style.setProperty(
-    "--rotate",
-    rotation + "deg"
-);
-
-
-note.style.setProperty(
-    "--fromX",
-    direction[0] + "px"
-);
-
-
-note.style.setProperty(
-    "--fromY",
-    direction[1] + "px"
-);
-
-
-stickyArea.appendChild(
-    note
-);
-
-}
-
-/* ==========================================
-SCENE 2 → SCENE 3
-========================================== */
-
-notesContinue.addEventListener(
-"click",
-() => {
+notesContinue.addEventListener("click", () => {
 
     showScene(3);
 
-}
-
-);
-
-/* ==========================================
-ENVELOPE
-========================================== */
-
-envelope.addEventListener(
-"click",
-() => {
-
-    if (
-        envelope.classList.contains(
-            "open"
-        )
-    ) {
-
-        return;
-
-    }
+});
 
 
-    envelope.classList.add(
-        "open"
-    );
+/* =====================================================
+   ENVELOPE
+===================================================== */
 
+let envelopeOpened = false;
 
-    envelopeHint.style.opacity =
-        "0";
+envelope.addEventListener("click", () => {
 
+    if (!envelopeOpened) {
 
-    /*
-       Wait for letter animation.
-    */
+        envelopeOpened = true;
 
-    setTimeout(
-        () => {
+        envelope.classList.add("open");
 
-            envelopeHint.textContent =
-                "CLICK OUTSIDE TO CONTINUE";
+        envelopeHint.textContent =
+            "YOUR MESSAGE IS INSIDE 💙";
 
-            envelopeHint.style.opacity =
-                "1";
+        setTimeout(() => {
 
-        },
+            envelopeHint.style.opacity = "0";
 
-        1800
-    );
+            finalButton.classList.remove("hidden");
 
-}
-
-);
-
-/* ==========================================
-GO TO FINAL
-========================================== */
-
-document
-.querySelector(".scene-3")
-.addEventListener(
-"click",
-event => {
-
-        if (
-            !envelope.classList.contains(
-                "open"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            event.target.closest(
-                ".envelope"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        showScene(4);
+        }, 1100);
 
     }
-);
+
+});
+
+
+/* =====================================================
+   FINAL BUTTON
+===================================================== */
+
+finalButton.addEventListener("click", () => {
+
+    showScene(4);
+
+});
