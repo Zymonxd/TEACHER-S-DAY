@@ -1,249 +1,206 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Happy Teacher's Day</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no">
 
-<link rel="stylesheet" href="style.css">
+    <title>Happy Teacher's Day</title>
 
-</head><body><!-- ==========================================
-     MUSIC
-=========================================== -->
+    <link rel="stylesheet" href="style.css">
+</head>
 
-<audio id="music" src="music.mp3" loop></audio>
+<body>
 
+    <!-- MUSIC -->
+    <audio id="music" src="music.mp3" loop></audio>
 
-<!-- ==========================================
-     PARTICLES
-=========================================== -->
+    <!-- =========================
+         SCENE 1 — INTRO
+    ========================== -->
+    <section id="scene1" class="scene active">
 
-<div id="particles"></div>
+        <div class="particles" id="particles"></div>
 
+        <div class="intro-content">
 
-<!-- ==========================================
-     SCENE 1
-     INTRO
-=========================================== -->
+            <div class="tiny-label">
+                A LITTLE MESSAGE FROM ZYMON AGULTO STEM 1101
+            </div>
 
-<section class="scene scene-1 active">
+            <h1 id="mainTitle"></h1>
 
-    <div class="intro-content">
+            <div class="gold-line"></div>
 
-        <div class="small-label">
-            A LITTLE SOMETHING FOR YOU
+            <p id="subTitle"></p>
+
+            <button id="startButton" class="continue-button">
+                CLICK TO CONTINUE
+                <span>→</span>
+            </button>
+
         </div>
 
-        <h1 id="mainTitle"></h1>
+    </section>
 
-        <div class="gold-line"></div>
 
-        <h2 id="subTitle"></h2>
+    <!-- =========================
+         SCENE 2 — STICKY NOTES
+    ========================== -->
+    <section id="scene2" class="scene">
 
-        <button id="startButton" class="continue-button hidden">
-            <span>✦</span>
-            CLICK TO CONTINUE
-            <span>✦</span>
+        <div class="sticky-background"></div>
+
+        <div class="big-message">
+            <span>HAPPY</span>
+            <strong>TEACHER'S DAY</strong>
+        </div>
+
+        <div id="stickyArea"></div>
+
+        <div class="note-vignette"></div>
+
+        <button id="notesContinue" class="continue-button hidden">
+            THERE'S MORE
+            <span>→</span>
         </button>
 
-    </div>
-
-</section>
+    </section>
 
 
+    <!-- =========================
+         SCENE 3 — ENVELOPE
+    ========================== -->
+    <section id="scene3" class="scene">
 
-<!-- ==========================================
-     SCENE 2
-     STICKY NOTES
-=========================================== -->
+        <div class="envelope-wrapper">
 
-<section class="scene scene-2">
+            <div class="envelope" id="envelope">
 
-    <!-- Main text -->
+                <!-- BACK -->
+                <div class="envelope-back"></div>
 
-    <div class="big-message">
+                <!-- LETTER -->
+                <div class="letter-paper">
 
-        <div class="behind-label">
-            A MESSAGE FROM YOUR STUDENTS
-        </div>
+                    <div class="letter-content">
 
-        <h1>
-            HAPPY<br>
-            TEACHER'S<br>
-            DAY
-        </h1>
+                        <div class="letter-decoration">✦</div>
 
-    </div>
+                        <h2>Dear Teacher,</h2>
 
+                        <p>
+                            Today, we celebrate you—not only for the
+                            lessons you teach, but for the patience,
+                            encouragement, and kindness you share every day.
+                        </p>
 
-    <!-- Sticky notes -->
+                        <p>
+                            Thank you for guiding us, answering our
+                            questions, encouraging us when we struggle,
+                            and celebrating our little victories.
+                        </p>
 
-    <div id="stickyArea"></div>
+                        <p>
+                            Some lessons may be found in books, but the
+                            lessons you leave in our hearts go far beyond
+                            the classroom.
+                        </p>
 
+                        <p>
+                            We may not always say it, but we truly
+                            appreciate everything you do for us.
+                        </p>
 
-    <!-- Dark overlay -->
+                        <p>
+                            Thank you for believing in us, being patient
+                            with us, and helping us become better versions
+                            of ourselves.
+                        </p>
 
-    <div id="noteVignette"></div>
+                        <div class="letter-ending">
+                            <h3>Happy Teacher's Day!</h3>
 
-
-    <!-- Continue -->
-
-    <button id="notesContinue" class="continue-button hidden">
-
-        <span>✦</span>
-
-        CLICK TO CONTINUE
-
-        <span>✦</span>
-
-    </button>
-
-</section>
-
-
-
-<!-- ==========================================
-     SCENE 3
-     LETTER
-=========================================== -->
-
-<section class="scene scene-3">
-
-    <div class="letter-background"></div>
-
-    <div class="letter-intro">
-
-        <div class="envelope" id="envelope">
-
-            <div class="envelope-back"></div>
-
-            <div class="letter-paper">
-
-                <div class="letter-content">
-
-                    <div class="letter-decoration">
-                        ✦
-                    </div>
-
-                    <h2>Dear Teacher,</h2>
-
-                    <p>
-                        Today, we celebrate you—not only for the
-                        lessons you teach, but for the patience,
-                        encouragement, and kindness you share every day.
-                    </p>
-
-                    <p>
-                        Behind every lesson is someone who chooses
-                        to guide us, even when learning gets difficult.
-                        Behind every achievement is someone who helped
-                        us believe that we could do it.
-                    </p>
-
-                    <p>
-                        Thank you for answering our questions,
-                        listening to us, encouraging us when we struggle,
-                        and celebrating our small victories.
-                    </p>
-
-                    <p>
-                        Some lessons may be found in books,
-                        but the lessons you leave in our hearts
-                        go far beyond the classroom.
-                    </p>
-
-                    <p>
-                        We may not always say it, but we truly
-                        appreciate everything you do.
-                    </p>
-
-                    <p>
-                        Thank you for being part of our journey,
-                        for believing in us, and for helping us
-                        become better versions of ourselves.
-                    </p>
-
-                    <div class="letter-ending">
-
-                        <strong>
-                            Happy Teacher's Day!
-                        </strong>
-
-                        <br>
-
-                        <span>
-                            With gratitude,
-                        </span>
-
-                        <br>
-
-                        <b>
-                            Your Students
-                        </b>
+                            <p>
+                                With gratitude,<br>
+                                <strong>Zymon Agulto and friends</strong>
+                            </p>
+                        </div>
 
                     </div>
 
                 </div>
 
+                <!-- ENVELOPE FRONT -->
+                <div class="envelope-front"></div>
+
+                <!-- FLAP -->
+                <div class="envelope-flap"></div>
+
             </div>
 
-            <div class="envelope-front"></div>
+            <div id="envelopeHint">
+                TAP THE ENVELOPE TO OPEN
+            </div>
 
-            <div class="envelope-flap"></div>
+            <button id="finalButton" class="continue-button hidden">
+                CONTINUE
+                <span>→</span>
+            </button>
 
         </div>
 
+    </section>
 
-        <div id="envelopeHint">
-            ✦ CLICK THE ENVELOPE ✦
+
+    <!-- =========================
+         SCENE 4 — FINAL
+    ========================== -->
+    <section id="scene4" class="scene">
+
+        <div class="final-glow"></div>
+
+        <div class="final-content">
+
+            <div class="final-stars">
+                ✦　✧　✦
+            </div>
+
+            <p class="final-small">
+                ONE LAST THING...
+            </p>
+
+            <h1>
+                THANK YOU
+            </h1>
+
+            <h2>
+                FOR EVERYTHING.
+            </h2>
+
+            <div class="final-line"></div>
+
+            <p class="final-message">
+                Thank you for teaching us,<br>
+                believing in us,<br>
+                and being part of our journey.
+            </p>
+
+            <div class="final-heart">
+                ♥
+            </div>
+
+            <p class="final-signature">
+                — Zymon and Friends from stem 1101
+            </p>
+
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
+    <script src="script.js"></script>
 
-<!-- ==========================================
-     SCENE 4
-     FINAL
-=========================================== -->
-
-<section class="scene scene-4">
-
-    <div class="final-content">
-
-        <div class="final-stars">
-            ✦　✧　✦
-        </div>
-
-        <div class="final-small">
-            TO EVERY TEACHER
-        </div>
-
-        <h1>
-            THANK<br>
-            YOU.
-        </h1>
-
-        <div class="final-line"></div>
-
-        <p>
-            For every lesson.<br>
-            For every word of encouragement.<br>
-            For every moment you chose to believe in us.
-        </p>
-
-        <h2>
-            HAPPY TEACHER'S DAY
-        </h2>
-
-        <div class="final-stars">
-            ✦　✧　✦
-        </div>
-
-    </div>
-
-</section>
-
-
-<script src="script.js"></script>
-
-</body></html>
+</body>
+</html>
