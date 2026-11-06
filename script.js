@@ -1,648 +1,270 @@
-/* =====================================================
-   TEACHER'S DAY WEBSITE
-===================================================== */
-
-
 /* =========================================
-   ELEMENTS
+   YOU MADE IT TODAY
+   Main JavaScript
 ========================================= */
 
-const music =
-    document.getElementById("music");
 
-const mainTitle =
-    document.getElementById("mainTitle");
+/* ================= SCREEN SYSTEM ================= */
 
-const subTitle =
-    document.getElementById("subTitle");
+function showScreen(id) {
 
-const startButton =
-    document.getElementById("startButton");
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
 
-const goldLine =
-    document.querySelector(".gold-line");
+  const screen = document.getElementById(id);
 
-const stickyArea =
-    document.getElementById("stickyArea");
+  screen.classList.add("active");
 
-const notesContinue =
-    document.getElementById("notesContinue");
-
-const envelope =
-    document.getElementById("envelope");
-
-const envelopeHint =
-    document.getElementById("envelopeHint");
-
-const finalButton =
-    document.getElementById("finalButton");
-
-
-/* =========================================
-   SCENE FUNCTION
-========================================= */
-
-function showScene(number) {
-
-    document
-        .querySelectorAll(".scene")
-        .forEach(scene => {
-
-            scene.classList.remove("active");
-
-        });
-
-    const target =
-        document.getElementById(
-            "scene" + number
-        );
-
-    if (target) {
-        target.classList.add("active");
-    }
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
-/* =========================================
-   MUSIC
-========================================= */
+/* ================= TYPEWRITER ================= */
 
-let musicHasStarted = false;
+const openingText =
+  "Hey.\nBefore you leave...\nI just want you to know something.";
 
-async function playMusic() {
+let charIndex = 0;
+let lineBreakPause = false;
 
-    if (musicHasStarted) {
-        return;
-    }
+function typeOpening() {
 
-    try {
+  if (charIndex < openingText.length) {
 
-        /*
-         * Reset the audio in case the browser
-         * previously rejected playback.
-         */
+    const character = openingText.charAt(charIndex);
 
-        music.currentTime = 0;
+    if (character === "\n") {
 
-        music.volume = 0.5;
+      document.getElementById("openingText").innerHTML += "<br>";
 
-        await music.play();
+    } else {
 
-        musicHasStarted = true;
-
-        console.log(
-            "Teacher's Day music is playing."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Music could not play.",
-            error
-        );
-
-        /*
-         * The website itself will continue working.
-         */
+      document.getElementById("openingText").innerHTML += character;
 
     }
+
+    charIndex++;
+
+    setTimeout(typeOpening, 55);
+
+  } else {
+
+    setTimeout(() => {
+
+      document
+        .getElementById("startBtn")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("startBtn")
+        .style.animation = "fadeIn 1s ease";
+
+    }, 500);
+
+  }
+
 }
 
 
-/* =========================================
-   PARTICLES
-========================================= */
+/* Start typing when page loads */
 
-function createParticles() {
+window.addEventListener("load", () => {
 
-    const container =
-        document.getElementById(
-            "particles"
-        );
+  setTimeout(typeOpening, 800);
 
-    for (let i = 0; i < 45; i++) {
+});
 
-        const particle =
-            document.createElement("div");
 
-        particle.className =
-            "particle";
+/* ================= START ================= */
 
-        particle.style.left =
-            Math.random() * 100 + "%";
+document.getElementById("startBtn").addEventListener("click", () => {
 
-        particle.style.animationDuration =
-            5 + Math.random() * 9 + "s";
+  showScreen("mainMessage");
 
-        particle.style.animationDelay =
-            -Math.random() * 10 + "s";
+});
 
-        particle.style.opacity =
-            .2 + Math.random() * .7;
 
-        container.appendChild(
-            particle
-        );
-    }
+/* ================= CHOICES ================= */
+
+function showChoices() {
+
+  showScreen("choices");
+
 }
 
-createParticles();
+
+const messages = {
+
+  tired: {
+
+    icon: "☁️",
+
+    title: "It's okay to rest.",
+
+    text:
+      "You don't have to be productive every second. Rest isn't failure. Sometimes continuing means allowing yourself to breathe."
+  },
+
+  difficult: {
+
+    icon: "🌧️",
+
+    title: "Today was difficult.",
+
+    text:
+      "A difficult day doesn't mean every day will feel like this. You made it through today, and tomorrow gives you another chance."
+  },
+
+  overthinking: {
+
+    icon: "💭",
+
+    title: "You can let your mind rest.",
+
+    text:
+      "Not every thought needs an answer tonight. Some things can wait until tomorrow."
+  },
+
+  encouragement: {
+
+    icon: "🌱",
+
+    title: "Keep going.",
+
+    text:
+      "You don't have to see the entire road ahead. Sometimes you only need enough strength for the next step."
+  }
+
+};
 
 
-/* =========================================
-   TYPEWRITER
-========================================= */
+function chooseMessage(type) {
 
-function typeWriter(
-    element,
-    text,
-    speed
-) {
+  const selected = messages[type];
 
-    return new Promise(resolve => {
+  document.getElementById("choiceIcon").textContent =
+    selected.icon;
 
-        element.textContent = "";
+  document.getElementById("choiceTitle").textContent =
+    selected.title;
 
-        let index = 0;
+  document.getElementById("choiceText").textContent =
+    selected.text;
 
-        const timer =
-            setInterval(() => {
+  showScreen("choiceMessage");
 
-                element.textContent +=
-                    text[index];
+}
 
-                index++;
 
-                if (
-                    index >=
-                    text.length
-                ) {
+/* ================= BREATHING ================= */
 
-                    clearInterval(timer);
+function startBreathing() {
 
-                    resolve();
+  showScreen("breathing");
 
-                }
+  const breathText =
+    document.getElementById("breathText");
 
-            }, speed);
+  let cycle = 0;
 
+  const breathingWords = [
+    "Breathe in",
+    "Hold",
+    "Breathe out",
+    "Rest"
+  ];
+
+  function changeBreath() {
+
+    if (cycle >= breathingWords.length) {
+
+      setTimeout(() => {
+
+        showScreen("achievement");
+
+      }, 1000);
+
+      return;
+
+    }
+
+    breathText.textContent =
+      breathingWords[cycle];
+
+    cycle++;
+
+    setTimeout(changeBreath, 2000);
+
+  }
+
+  changeBreath();
+
+}
+
+
+/* ================= FINAL ================= */
+
+let finalStep = 1;
+
+
+function showFinal() {
+
+  finalStep = 1;
+
+  document
+    .querySelectorAll("#final [id^='finalStep']")
+    .forEach(element => {
+      element.classList.add("hidden");
     });
 
-}
+  document
+    .getElementById("finalStep1")
+    .classList.remove("hidden");
 
-
-/* =========================================
-   INTRO
-========================================= */
-
-async function startIntro() {
-
-    await wait(700);
-
-    await typeWriter(
-        mainTitle,
-        "HAPPY TEACHER'S DAY",
-        80
-    );
-
-    goldLine.classList.add("show");
-
-    await wait(400);
-
-    await typeWriter(
-        subTitle,
-        "THANK YOU FOR BEING THE BEST TEACHER",
-        45
-    );
-
-    startButton.classList.add(
-        "show"
-    );
-}
-
-startIntro();
-
-
-/* =========================================
-   WAIT FUNCTION
-========================================= */
-
-function wait(milliseconds) {
-
-    return new Promise(resolve => {
-
-        setTimeout(
-            resolve,
-            milliseconds
-        );
-
-    });
+  showScreen("final");
 
 }
 
 
-/* =========================================
-   START WEBSITE
-========================================= */
-
-startButton.addEventListener(
-    "click",
-    async function () {
-
-        /*
-         * IMPORTANT:
-         *
-         * This is the user's actual click.
-         * Mobile browsers allow audio playback
-         * much more reliably from here.
-         */
-
-        await playMusic();
-
-        showScene(2);
-
-        startStickyAnimation();
-
-    }
-);
-
-
-/* =========================================
-   STICKY MESSAGES
-========================================= */
-
-const messages = [
-
-    "You are the best teacher!",
-
-    "Thank you for teaching us!",
-
-    "Thank you for believing in us!",
-
-    "You inspire us every day!",
-
-    "We appreciate you!",
-
-    "Thank you for your patience!",
-
-    "You make learning fun!",
-
-    "Thank you for always helping us!",
-
-    "You make a difference!",
-
-    "We are grateful for you!",
-
-    "Thank you for guiding us!",
-
-    "You motivate us to do better!",
-
-    "Your lessons stay with us!",
-
-    "Thank you for understanding us!",
-
-    "You inspire us to dream big!",
-
-    "Thank you for never giving up on us!",
-
-    "You make our classroom special!",
-
-    "We are lucky to have you!",
-
-    "Thank you for your kindness!",
-
-    "You bring out the best in us!",
-
-    "Thank you for every lesson!",
-
-    "You are appreciated more than you know!",
-
-    "Thank you for encouraging us!",
-
-    "You make a lasting impact!",
-
-    "Thank you for everything you do!",
-
-    "You help us believe in ourselves!",
-
-    "Your hard work inspires us!",
-
-    "Thank you for making a difference!",
-
-    "You will always be remembered!",
-
-    "Happy Teacher's Day!"
-
-];
-
-
-/* =========================================
-   SHUFFLE
-========================================= */
-
-function shuffle(array) {
-
-    const result =
-        [...array];
-
-    for (
-        let i = result.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
-
-        [
-            result[i],
-            result[j]
-        ] = [
-            result[j],
-            result[i]
-        ];
-
-    }
-
-    return result;
-}
-
-
-/* =========================================
-   GRID POSITIONS
-========================================= */
-
-function createPositions(
-    amount
-) {
-
-    const positions = [];
-
-    const columns = 6;
-    const rows = 5;
-
-    for (
-        let row = 0;
-        row < rows;
-        row++
-    ) {
-
-        for (
-            let column = 0;
-            column < columns;
-            column++
-        ) {
-
-            positions.push({
-
-                x:
-                    ((column + .5) /
-                    columns) * 100,
-
-                y:
-                    ((row + .5) /
-                    rows) * 100
-
-            });
-
-        }
-
-    }
-
-    return shuffle(
-        positions
-    ).slice(
-        0,
-        amount
-    );
-}
-
-
-/* =========================================
-   CREATE NOTE
-========================================= */
-
-function createNote(
-    text,
-    position
-) {
-
-    const note =
-        document.createElement(
-            "div"
-        );
-
-    note.className =
-        "sticky-note";
-
-    note.textContent =
-        text;
-
-    note.style.left =
-        position.x + "%";
-
-    note.style.top =
-        position.y + "%";
-
-
-    const directions = [
-
-        [-120, -120],
-
-        [120, -120],
-
-        [-120, 120],
-
-        [120, 120],
-
-        [0, -150],
-
-        [0, 150],
-
-        [-180, 0],
-
-        [180, 0]
-
-    ];
-
-
-    const direction =
-        directions[
-            Math.floor(
-                Math.random() *
-                directions.length
-            )
-        ];
-
-
-    note.style.setProperty(
-        "--startX",
-        direction[0] + "vw"
+function nextFinal() {
+
+  const current =
+    document.getElementById(
+      "finalStep" + finalStep
     );
 
-    note.style.setProperty(
-        "--startY",
-        direction[1] + "vh"
+  current.classList.add("hidden");
+
+  finalStep++;
+
+  const next =
+    document.getElementById(
+      "finalStep" + finalStep
     );
 
+  if (next) {
 
-    note.style.setProperty(
-        "--rotation",
-        (
-            Math.random() * 12 - 6
-        ) + "deg"
-    );
+    next.classList.remove("hidden");
 
+    next.style.animation =
+      "fadeIn 1.2s ease";
 
-    note.style.setProperty(
-        "--startRotation",
-        (
-            Math.random() * 80 - 40
-        ) + "deg"
-    );
-
-
-    stickyArea.appendChild(
-        note
-    );
-}
-
-
-/* =========================================
-   START STICKY ANIMATION
-========================================= */
-
-function startStickyAnimation() {
-
-    stickyArea.innerHTML = "";
-
-    notesContinue.classList.add(
-        "hidden"
-    );
-
-    const shuffled =
-        shuffle(messages);
-
-    const positions =
-        createPositions(
-            shuffled.length
-        );
-
-    let index = 0;
-
-    const timer =
-        setInterval(() => {
-
-            if (
-                index >=
-                shuffled.length
-            ) {
-
-                clearInterval(
-                    timer
-                );
-
-                setTimeout(() => {
-
-                    notesContinue.classList.remove(
-                        "hidden"
-                    );
-
-                    notesContinue.classList.add(
-                        "show"
-                    );
-
-                }, 1200);
-
-                return;
-            }
-
-
-            createNote(
-                shuffled[index],
-                positions[index]
-            );
-
-            index++;
-
-        }, 230);
+  }
 
 }
 
 
-/* =========================================
-   STICKY CONTINUE
-========================================= */
+/* ================= GOODNIGHT ================= */
 
-notesContinue.addEventListener(
-    "click",
-    function () {
+function goodnight() {
 
-        showScene(3);
+  const goodbye =
+    document.getElementById("goodnight");
 
-    }
-);
+  goodbye.classList.add("active");
 
-
-/* =========================================
-   ENVELOPE
-========================================= */
-
-let envelopeOpened = false;
-
-envelope.addEventListener(
-    "click",
-    function () {
-
-        if (envelopeOpened) {
-            return;
-        }
-
-        envelopeOpened = true;
-
-        envelope.classList.add(
-            "open"
-        );
-
-
-        envelopeHint.style.opacity =
-            "0";
-
-
-        /*
-         * Wait until the letter has
-         * moved upward before showing
-         * the continue button.
-         */
-
-        setTimeout(() => {
-
-            finalButton.classList.remove(
-                "hidden"
-            );
-
-            finalButton.classList.add(
-                "show"
-            );
-
-        }, 1200);
-
-    }
-);
-
-
-/* =========================================
-   FINAL SCREEN
-========================================= */
-
-finalButton.addEventListener(
-    "click",
-    function () {
-
-        showScene(4);
-
-    }
-);
+}
