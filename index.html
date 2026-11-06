@@ -1,223 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0,
-                   maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Happy Teacher's Day</title>
+  <title>You Made It Today</title>
 
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- MUSIC -->
-    <audio id="music" loop preload="auto">
-        <source src="./music.mp3" type="audio/mpeg">
-    </audio>
+  <!-- STAR BACKGROUND -->
+  <div class="stars"></div>
+  <div class="stars stars2"></div>
+  <div class="stars stars3"></div>
+
+  <!-- MOON -->
+  <div class="moon"></div>
+
+  <!-- ================= OPENING ================= -->
+
+  <main id="opening" class="screen active">
+
+    <div class="content">
+
+      <p class="small-text">A little place for you.</p>
+
+      <h1 id="openingText"></h1>
+
+      <p class="subtext">
+        You don't have to do anything right now.
+      </p>
+
+      <button id="startBtn" class="glow-btn hidden">
+        I NEED THIS TODAY PLEASE FINISH UNTIL THE END
+      </button>
+
+    </div>
+
+  </main>
 
 
-    <!-- =========================
-         SCENE 1
-    ========================== -->
+  <!-- ================= MAIN MESSAGE ================= -->
 
-    <section id="scene1" class="scene active">
+  <main id="mainMessage" class="screen">
 
-        <div id="particles"></div>
+    <div class="content">
 
-        <div class="intro-content">
+      <div class="emoji">🌙</div>
 
-            <p class="small-label">
-                A LITTLE MESSAGE FROM Zymon And Friends from STEM 1101
-            </p>
+      <h1>Congratulations.</h1>
 
-            <h1 id="mainTitle"></h1>
+      <p class="big-message">
+        You made it through another day.
+      </p>
 
-            <div class="gold-line"></div>
+      <p class="message">
+        Maybe today wasn't perfect.<br>
+        Maybe you didn't accomplish everything you wanted to.
+      </p>
 
-            <p id="subTitle"></p>
+      <p class="message">
+        Maybe all you did was get through it.
+      </p>
 
-            <button id="startButton" class="continue-button">
-                CLICK TO CONTINUE
-                <span>→</span>
-            </button>
+      <p class="highlight">
+        And that's okay.
+      </p>
 
-        </div>
+      <p class="message">
+        You are still here.<br>
+        You kept going.<br>
+        You made it to today.
+      </p>
 
-    </section>
+      <button class="continue-btn" onclick="showChoices()">
+        TAKE A BREATH →
+      </button>
+
+    </div>
+
+  </main>
 
 
-    <!-- =========================
-         SCENE 2
-    ========================== -->
+  <!-- ================= CHOICES ================= -->
 
-    <section id="scene2" class="scene">
+  <main id="choices" class="screen">
 
-        <div class="sticky-bg"></div>
+    <div class="content">
 
-        <div class="big-message">
-            <span>HAPPY</span>
-            <strong>TEACHER'S DAY</strong>
-        </div>
+      <p class="small-text">What do you need right now?</p>
 
-        <div id="stickyArea"></div>
+      <h2>Choose one.</h2>
 
-        <div class="vignette"></div>
+      <div class="choice-container">
 
-        <button id="notesContinue"
-                class="continue-button hidden">
-            CLICK TO CONTINUE
-            <span>→</span>
+        <button class="choice" onclick="chooseMessage('tired')">
+          ☁️<br>
+          <span>I'm tired</span>
         </button>
 
-    </section>
+        <button class="choice" onclick="chooseMessage('difficult')">
+          🌧️<br>
+          <span>Today was difficult</span>
+        </button>
+
+        <button class="choice" onclick="chooseMessage('overthinking')">
+          💭<br>
+          <span>I'm overthinking</span>
+        </button>
+
+        <button class="choice" onclick="chooseMessage('encouragement')">
+          🌱<br>
+          <span>I need encouragement</span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
 
 
-    <!-- =========================
-         SCENE 3
-    ========================== -->
+  <!-- ================= CHOICE MESSAGE ================= -->
 
-    <section id="scene3" class="scene">
+  <main id="choiceMessage" class="screen">
 
-        <div class="envelope-wrapper">
+    <div class="content">
 
-            <div id="envelope" class="envelope">
+      <div id="choiceIcon" class="emoji">🌱</div>
 
-                <!-- Envelope back -->
-                <div class="envelope-back"></div>
+      <h2 id="choiceTitle"></h2>
 
-                <!-- Letter -->
-                <div class="letter">
+      <p id="choiceText" class="big-message"></p>
 
-                    <div class="letter-inner">
+      <button class="continue-btn" onclick="startBreathing()">
+        TAKE A MOMENT →
+      </button>
 
-                        <div class="letter-star">
-                            ✦
-                        </div>
+    </div>
 
-                        <h2>Dear Teacher,</h2>
-
-                        <p>
-                            Today, we celebrate you—not only for the
-                            lessons you teach, but for the patience,
-                            encouragement, and kindness you share every day.
-                        </p>
-
-                        <p>
-                            Thank you for guiding us, answering our
-                            questions, encouraging us when we struggle,
-                            and celebrating our little victories.
-                        </p>
-
-                        <p>
-                            Some lessons may be found in books, but the
-                            lessons you leave in our hearts go far beyond
-                            the classroom.
-                        </p>
-
-                        <p>
-                            We may not always say it, but we truly
-                            appreciate everything you do for us.
-                        </p>
-
-                        <p>
-                            Thank you for believing in us, being patient
-                            with us, and helping us become better versions
-                            of ourselves.
-                        </p>
-
-                        <div class="letter-end">
-
-                            <h3>
-                                Happy Teacher's Day!
-                            </h3>
-
-                            <p>
-                                With gratitude,<br>
-                                <b>Zymon Agulto</b>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Envelope front -->
-                <div class="envelope-front"></div>
-
-                <!-- Envelope flap -->
-                <div class="envelope-flap"></div>
-
-            </div>
+  </main>
 
 
-            <p id="envelopeHint">
-                TAP THE ENVELOPE TO OPEN, Scroll for the letter 
-            </p>
+  <!-- ================= BREATHING ================= -->
+
+  <main id="breathing" class="screen">
+
+    <div class="content">
+
+      <p class="small-text">For the next few seconds...</p>
+
+      <h2>Just breathe.</h2>
+
+      <div class="breathing-circle">
+        <span id="breathText">Breathe in</span>
+      </div>
+
+      <p class="message">
+        You don't need to solve everything tonight.
+      </p>
+
+    </div>
+
+  </main>
 
 
-            <button id="finalButton"
-                    class="continue-button hidden">
-                CLICK TO CONTINUE
-                <span>→</span>
-            </button>
+  <!-- ================= ACHIEVEMENT ================= -->
+
+  <main id="achievement" class="screen">
+
+    <div class="content">
+
+      <div class="trophy">🏆</div>
+
+      <p class="small-text">TODAY'S ACHIEVEMENT</p>
+
+      <h2>You made it to today.</h2>
+
+      <div class="achievement-card">
+
+        <p>🏆 You kept going.</p>
+        <p>🏆 You made it through.</p>
+        <p>🏆 You are still here.</p>
+
+        <div class="line"></div>
+
+        <strong>
+          And that's something worth celebrating.
+        </strong>
+
+      </div>
+
+      <button class="continue-btn" onclick="showFinal()">
+        BEFORE YOU GO →
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= FINAL ================= -->
+
+  <main id="final" class="screen">
+
+    <div class="content final-content">
+
+      <div id="finalStep1">
+
+        <div class="emoji">💙</div>
+
+        <h2>Before you go...</h2>
+
+        <p class="message">
+          If this little website helped you somehow,
+          thank you for being here.
+        </p>
+
+        <button class="continue-btn" onclick="nextFinal()">
+          ONE LAST THING →
+        </button>
+
+      </div>
+
+
+      <div id="finalStep2" class="hidden">
+
+        <h2>Want to say thank you?</h2>
+
+        <p class="message">
+          If you want to thank me personally,
+          you can always go back to wherever
+          you found this website.
+        </p>
+
+        <div class="social-card">
+
+          <p>📘 <strong>Facebook</strong></p>
+          <p>Vincent Agulto</p>
+
+          <div class="social-line"></div>
+
+          <p>📸 <strong>Instagram</strong></p>
+          <p>@http.c_mon</p>
 
         </div>
 
-    </section>
+        <p class="message">
+          You can also share this website on your
+          Instagram or Facebook Story and mention me.
+        </p>
+
+        <button class="continue-btn" onclick="nextFinal()">
+          BUT THERE'S SOMETHING MORE →
+        </button>
+
+      </div>
 
 
-    <!-- =========================
-         SCENE 4
-    ========================== -->
+      <div id="finalStep3" class="hidden">
 
-    <section id="scene4" class="scene">
+        <div class="emoji">🌱</div>
 
-        <div class="final-glow"></div>
+        <h2>Pass the kindness forward.</h2>
 
-        <div class="final-content">
+        <p class="message">
+          You don't have to give me anything.
+        </p>
 
-            <div class="stars">
-                ✦　✧　✦
-            </div>
+        <p class="message">
+          If you want to give something,
+          help someone else instead.
+        </p>
 
-            <p class="last-message">
-                ONE LAST THING...
-            </p>
+        <div class="kindness-list">
 
-            <h1>
-                THANK YOU
-            </h1>
-
-            <h2>
-                FOR EVERYTHING.
-            </h2>
-
-            <div class="final-line"></div>
-
-            <p class="final-text">
-                Thank you for teaching us,<br>
-                believing in us,<br>
-                and being part of our journey.
-            </p>
-
-            <div class="heart">
-                ♥
-            </div>
-
-            <p class="signature">
-                — Zymon And Friends 
-            </p>
+          <p>💙 Help someone who needs it.</p>
+          <p>🌱 Be kind to someone having a difficult day.</p>
+          <p>🤝 Help an elderly person.</p>
+          <p>☀️ Make someone smile.</p>
+          <p>💬 Check on a friend.</p>
 
         </div>
 
-    </section>
+        <p class="highlight">
+          Let the kindness continue.
+        </p>
+
+        <button class="continue-btn" onclick="nextFinal()">
+          ONE LAST MESSAGE →
+        </button>
+
+      </div>
 
 
-    <script src="script.js"></script>
+      <div id="finalStep4" class="hidden">
+
+        <div class="final-moon">🌙</div>
+
+        <h2>You made it through today.</h2>
+
+        <p class="big-message">
+          Rest now.
+        </p>
+
+        <p class="message">
+          Tomorrow is another day.
+        </p>
+
+        <button class="goodnight-btn" onclick="goodnight()">
+          GOODNIGHT 🌙
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================= GOODNIGHT ================= -->
+
+  <div id="goodnight" class="goodnight-screen">
+
+    <div>
+
+      <div class="huge-moon">🌙</div>
+
+      <h1>Thank you for staying.</h1>
+
+      <p>See you tomorrow. 💙</p>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
 
 </body>
 </html>
